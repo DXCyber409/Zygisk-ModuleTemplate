@@ -10,6 +10,7 @@ plugins {
 apply from: file(rootProject.file('module.gradle'))
 
 android {
+    namespace 'zygisk.template'
     compileSdk target_sdk
     defaultConfig {
         minSdk min_sdk
@@ -26,10 +27,10 @@ android {
     externalNativeBuild {
         cmake {
             path "src/main/cpp/CMakeLists.txt"
-            version "3.20.3"
+            version "3.22.1"
         }
     }
-    ndkVersion '23.1.7779620'
+    ndkVersion '26.1.10909125'
 }
 
 afterEvaluate {
@@ -82,8 +83,8 @@ afterEvaluate {
         task("zip${variantCapped}", type: Zip) {
             dependsOn("prepareMagiskFiles${variantCapped}")
             from magiskDir
-            archiveName zipName
-            destinationDir outDir
+            archiveFileName = zipName
+            destinationDirectory = outDir
         }
 
         task("push${variantCapped}", type: Exec) {
